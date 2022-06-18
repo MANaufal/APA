@@ -77,6 +77,7 @@
         if($result->num_rows>0){
             $row = mysqli_fetch_assoc($result);
             $_SESSION['username'] = $row['username'];
+            $_SESSION['user_id'] = $row['id'];
             ?>
             <script>alert('Berhasil login!.')</script>
             <?php

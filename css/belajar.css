@@ -1,0 +1,26 @@
+.left {
+    float: left;
+    width: 25%;
+    height: 100%;
+    border: 1px solid var(--light);
+    background-color: var(--white);
+    overflow: auto;
+}
+
+.right {
+    position: relative;
+    float: left;
+    width: 75%;
+    height: 100%;
+}
+
+.wrapper {
+    position: relative;
+    width: var(--wrapper);
+    height: 670px;
+    transform: translate(-50%, 0);
+}
+
+li{
+    list-style-type: none;
+}

@@ -49,10 +49,5 @@
             }
             ?>
         </div>
-
-        <div class = "content" style = "position: absolute; left: 50px; top: 150px; font-size: 15px; color: #947360; text-align: center">
-            <h1>Menjadi solusi sekaligus pengalaman terbaik<br>untuk belajar bahasa Inggris</h1>
-            <a href="register.php"><button style = "color: white; background-color: #A1AFA0; font-size: 23px; width: 400px; height: 70px"><b>Mulai sekarang</b></button></a>
-        </div>        
     </body>
 </html>

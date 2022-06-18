@@ -10,14 +10,15 @@
     session_start();
   
     ?>
+    <body>
         <div class = "navbar">
             <a href="belajar.php" style = "float:left"><b>BELAJAR</b></a>
             <a href="timeline.php" style = "float:left"><b>LINIMASA</b></a>
-            <a href="#pesan" style = "float:left"><b>PESAN</b></a>
+            <a href="chat.php" style = "float:left"><b>PESAN</b></a>
             <?php
             if(!isset($_SESSION['username'])){
                 ?>
-                <a href="login.php" style = "float:right">Akun belum terbentuk</a>
+                <a href="login.php" style = "float:right">Log in</a>
                 <?php
             }else{
                 ?>
@@ -63,15 +64,15 @@
     <?php
         include 'config.php';
 
-        $sql = "SELECT username, message, likes FROM status";
+        $sql = "SELECT username, message, likes FROM status ORDER BY post_id DESC";
         $run = mysqli_query($conn, $sql);
 
         if($run->num_rows>0){
             while($row = $run->fetch_assoc()){
                 ?>
                 <div class ="container" style="background-color: #F0F0F0; border-radius: 30px; padding: 25px 10px; margin: 14px 40px">
-                <p><b><?php echo "$row[username]";?></b></p>
-                <p><b><?php echo "$row[message]";?></b></p>
+                <p style = "margin: 2px 20px"><b><?php echo "$row[username]";?></b></p>
+                <p style = "padding: 15px 50px;"><b><?php echo "$row[message]";?></b></p>
                 </div>
                 <?php
             }
