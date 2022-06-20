@@ -11,57 +11,6 @@
                 font-style: normal;
                 font-weight: 400;
             }
-
-            .wrapper {
-                position: relative;
-                width: var(--wrapper);
-                height: 670px;
-                transform: translate(-50%, 0);
-            }
-
-            .left {
-                float: left;
-                width: 25%;
-                height: 100%;
-                border: 1px solid var(--light);
-                background-color: var(--white);
-                overflow: auto;
-            }
-
-            .right {
-                position: relative;
-                float: left;
-                width: 75%;
-                height: 100%;
-            }
-
-            .top{
-                width: 100%;
-                height: 47px;
-                margin: 10px 15px;
-                padding: 16.5px 20px;
-                background-color: #970C10;     
-                color: white;          
-            }
-
-            .chat {
-                background-color: #970C10;
-                color: white;
-                padding: 30px 50px;
-                margin: 10px 0px;
-            }
-
-            ..write {
-                position: absolute;
-                bottom: 29px;
-                left: 30px;
-                height: 42px;
-                padding-left: 8px;
-                border: 1px solid var(--light);
-                background-color: #eceff1;
-                width: calc(100% - 58px);
-                border-radius: 5px;
-            }
         </style>
     </head>
 
@@ -100,29 +49,61 @@
 
         <div class = "wrapper">
                 <div class = "left">
-                    <?php
-                        $userid = $_SESSION['user_id'];
-                        
-                        $sql = "SELECT users.username FROM relationship
-                                JOIN users WHERE relationship.user_id = '$userid' 
-                                AND relationship.friend_id = users.id";
-                        $result = mysqli_query($conn, $sql);
+                        <?php
+                            $userid = $_SESSION['user_id'];
+                            
+                            $sql = "SELECT users.username, relationship.relationship_id FROM relationship
+                                    JOIN users WHERE relationship.user_id = '$userid' 
+                                    AND relationship.friend_id = users.id";
+                            $result = mysqli_query($conn, $sql);
 
-                        if($result->num_rows>0){
-                            while($row = $result->fetch_assoc()){
-                                ?>  
-                                    <div class = "chat">
-                                        <?php echo "$row[username]";?>
-                                    </div>
-                                <?php
+                            if($result->num_rows>0){
+                                while($row = $result->fetch_assoc()){
+                                    ?>  
+                                        <div class = "contact" id="c1">
+                                            <a href="chat.php?chatid=<?php ?>">
+                                                <?php echo "$row[username]";?>
+                                            </a>
+                                        </div>
+                                    <?php
+                                }
                             }
-                        }
-                    ?>
+                        ?>
             </div>
             <div class = "right">
                 <div class = "top">
                     <a>ya</a>
                 </div>
+                <?php
+                    $chatquery="SELECT message, sender
+                                FROM message WHERE relationship_id = 1
+                                ORDER BY message_id";
+                    $result = mysqli_query($conn, $chatquery);
+
+                    if($result->num_rows>0){
+                        while($row = $result->fetch_assoc()){
+                            if($row["sender"] == $userid){
+                                ?>
+                                    <p style="float:right"><?php echo "$row[message]" ?><br></p>
+                                <?php
+                            }else{
+                                ?>
+                                    <p style="float:left"><?php echo "$row[message]" ?><br></p>
+                                <?php
+                            }
+                        }
+                    }
+                ?>
+                <div class="write">
+                    <form action:"chat.php" method="submit">
+                            <input type="text" name="chat" placeholder="write a message">
+                            <button type="submit" name="send">Send</button>
+                    </form>
+                    <?php
+                        
+                    ?>
+                </div>
+                
             </div>
         </div>
     </body>
