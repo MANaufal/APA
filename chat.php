@@ -4,12 +4,25 @@
         <link rel="stylesheet" type="text/css" href="css/navbar.css">
         <link rel="stylesheet" href="https://use.typekit.net/oov2wcw.css">
         <link rel="stylesheet" type="text/css" href="css/chat.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="chat.js"></script>
 
         <style>
             body{
                 font-family: century-gothic, sans-serif;
                 font-style: normal;
                 font-weight: 400;
+            }
+
+            a{
+                text-decoration: none;
+                color: white;
+            }
+
+            .chat{
+                overflow: auto;
+                padding: 15px 25px;
+                height: 60%;
             }
         </style>
     </head>
@@ -60,8 +73,25 @@
                             if($result->num_rows>0){
                                 while($row = $result->fetch_assoc()){
                                     ?>  
-                                        <div class = "contact" id="c1">
-                                            <a href="chat.php?chatid=<?php ?>">
+                                        <div class = "contact">
+                                            <a href="chat.php?chatid=<?php echo $row['relationship_id']; ?>&username=<?php echo $row['username'];?>">
+                                                <?php echo "$row[username]";?>
+                                            </a>
+                                        </div>
+                                    <?php
+                                }
+                            }
+
+                            $findfriend = "SELECT users.username, relationship.relationship_id FROM relationship
+                                    JOIN users WHERE relationship.friend_id = '$userid' 
+                                    AND relationship.user_id = users.id";
+                            $run = mysqli_query($conn, $findfriend);
+
+                            if($run->num_rows>0){
+                                while($row = $run->fetch_assoc()){
+                                    ?>  
+                                        <div class = "contact">
+                                            <a href="chat.php?chatid=<?php echo $row['relationship_id']; ?>&username=<?php echo $row['username'];?>">
                                                 <?php echo "$row[username]";?>
                                             </a>
                                         </div>
@@ -72,38 +102,44 @@
             </div>
             <div class = "right">
                 <div class = "top">
-                    <a>ya</a>
+                    <div class = "activeusername"><?php
+                    if(isset($_GET['username'])){
+                        $friendname = $_GET['username'];
+                        $_SESSION['chatid'] = $_GET['chatid'];
+                        $chatid = $_GET['chatid'];
+                        echo "$friendname";
+                    }
+                    ?></div>
                 </div>
-                <?php
-                    $chatquery="SELECT message, sender
-                                FROM message WHERE relationship_id = 1
-                                ORDER BY message_id";
-                    $result = mysqli_query($conn, $chatquery);
-
-                    if($result->num_rows>0){
-                        while($row = $result->fetch_assoc()){
-                            if($row["sender"] == $userid){
+                    
+                <div id="chat" class="chat">
+                    
+                </div>
+                    
+                <div class="write">
+                    <form action:"chat.php" method="POST">
+                            <input type="text" name="chatting" placeholder="write a message"  autocomplete="off">
+                            <button type="submit" name="send" style="border: 0px; background-color: white;"></button>
+                    </form>
+                    <script>
+                        if ( window.history.replaceState ) {
+                            window.history.replaceState( null, null, window.location.href );
+                        }
+                    </script>
+                    <?php
+                        if(isset($_POST['send'])){
+                            $message = $_POST['chatting'];
+                            $chatquery = "INSERT INTO message(relationship_id, message, sender) VALUES('$chatid', '$message', '$userid')";
+                            
+                            if(!mysqli_query($conn, $chatquery)){
                                 ?>
-                                    <p style="float:right"><?php echo "$row[message]" ?><br></p>
-                                <?php
-                            }else{
-                                ?>
-                                    <p style="float:left"><?php echo "$row[message]" ?><br></p>
+                                <script>alert("An error occurred while sending a message")</script>
                                 <?php
                             }
                         }
-                    }
-                ?>
-                <div class="write">
-                    <form action:"chat.php" method="submit">
-                            <input type="text" name="chat" placeholder="write a message">
-                            <button type="submit" name="send">Send</button>
-                    </form>
-                    <?php
-                        
                     ?>
-                </div>
-                
+                </div>               
             </div>
         </div>
     </body>
+</html>
