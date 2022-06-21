@@ -31,7 +31,7 @@
         <div class = "container">           
             <h1><br></h1>
             <form action ="timeline.php" method="post">
-                <input type="text" name="comment" placeholder="Tulis sesuatu..." required>
+                <input type="text" name="comment" placeholder="Tulis sesuatu..." autocomplete = "off" required>
                 <button style = "float: right" type="submit" name="send"><b>Kirim</b></button>
             </form>
             <script>

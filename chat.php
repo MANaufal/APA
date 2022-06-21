@@ -120,6 +120,10 @@
                     <form action:"chat.php" method="POST">
                             <input type="text" name="chatting" placeholder="write a message"  autocomplete="off">
                             <button type="submit" name="send" style="border: 0px; background-color: white;"></button>
+                            <button onclick="generateTopic()" style="
+                            border-radius: 50px; color: white; background-color: green; border: 0px; padding: 14px;
+                            right: 0%; position: absolute; top: 50%;
+                            ">Topic</button>
                     </form>
                     <script>
                         if ( window.history.replaceState ) {
@@ -140,6 +144,16 @@
                     ?>
                 </div>               
             </div>
+            <script>
+                function generateTopic(){
+                $.ajax({
+                    type: "POST";
+                    url: 'generateTopic.php',
+                    success: function(result){
+                        $("div").text(result);}
+                    }
+                )}    
+            </script>
         </div>
     </body>
 </html>

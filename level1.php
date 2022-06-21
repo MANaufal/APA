@@ -59,6 +59,7 @@
                     <button name="answer" type="submit" value="2">Door</button>
                     <button name="answer" type="submit" value="1">Refrigerator</button>
                     <button name="answer" type="submit" value="3">Cupboard</button>
+                    <input type="text" name="answer">
                 </form>
                 
             </div>

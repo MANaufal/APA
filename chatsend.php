@@ -22,7 +22,7 @@ if(isset($_SESSION['chatid'])){
             if($row["sender"] == $userid){
                 ?>
                 <p style="
-                float:right; background-color: #c2bcbc;
+                float:right; background-color: #d9d5d5;
                 border-radius: 15px;
                 padding: 4px;
                 margin: 15px;

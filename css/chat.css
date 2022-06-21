@@ -1,3 +1,8 @@
+.activeusername {
+  position: absolute;
+  line-height: 20px;
+  font-size: 30px;
+}
 
 .wrapper {
   position: relative;
@@ -27,7 +32,8 @@
   margin: 10px 15px;
   padding: 16.5px 20px;
   background-color: #970C10;     
-  color: white;          
+  color: white;   
+  font-size: 20px;       
 }
 
 .contact {
@@ -41,7 +47,7 @@
 .write {
   position: absolute;
   bottom: 10%;
-  left: 30px;
+  left: 20px;
   height: 42px;
   padding-left: 8px;
   border: 1px solid var(--light);
